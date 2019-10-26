@@ -3,27 +3,34 @@ using namespace std;
 void clearscreen()
 {
     system("cls");
+    // Used ClearScreen because when Moving through Different Compiler of Turbo C++ it is really messy to edit each line getch() , clrscr() with system("cls")
+
 }
 struct Node {
-    int data;
-    Node *next;
+    int data; // Each Node have Integer type Data in it
+    Node *next; // This Memory Node Contains Address of Next Node
 };
 class Stack{
     private :
-        Node *top;
+        Node *top; // This Top Pointer Node at the top of Stack
+        /* Through this we can find all the nodes */
     public :
-       Node gettopNode()
+       Node* gettopNode()
         {
-            return *top;
+            return top; // As Top Pointer is Private member, getters are used here
         }
-        Stack()
+        Stack() // Constructor
         {
-            this->top = NULL;
+            this->top = NULL; // Initially Stack's top Points NULL
         }
 
-        bool push(int);
+        bool push(int); // To insert Data
         bool pop();
-        bool peek();
+        bool peek(); // To see Stack 
+        int gettotalnodes(); // Returns Total number of nodes in Stack
+        void deleteall();
+        /* Delete all is intentionally used, when leaving Stack Menu all Stack must be emptied before leaving Stack menu
+            So that tp avoid Orphand Memory Blocks in Memory */
 };
 bool Stack::push(int data)
 {
@@ -68,28 +75,63 @@ bool Stack::peek(){
                     if(top == temp){
                         cout<<"\n Start -> ";
                     }
+
                     cout<< temp->data << " -> "; // Printing Data
 
+                    // Used to Print Null BLock At Last of Stack
                     if(temp->next == NULL){
                         cout<<"NULL";
                     }
                     
-                    temp = temp->next;
+                    temp = temp->next; // Changes temp to next node address
                 }
 
                 return true;
             }
+}
+int Stack::gettotalnodes()
+{
+    if(top == NULL){
+        return 0;
+    }else{
+        int count = 0;
+        Node *temp = new Node;
+        temp = top;
+        while(temp != NULL)
+        {
+            count++;
+            temp = temp->next;
+        }
+
+        return count;
+    }
+}
+void Stack::deleteall(){
+                            Node *temp = new Node;
+                            temp = top;
+                        while(temp != NULL){
+                        	 
+                            cout<<"\nDeleted  - "<<temp->data<<"\n";
+                            delete temp;
+                            
+                            
+							temp = temp->next;
+                            
+						}
+                            
+                           
+                        
 }
 void stack()
 {
     int choices; bool status;
     Stack obj;
     start : 
-        cout<<" --------------- You Selected Stack Menu ----------------------\n";
-        cout<<"[ 1 ] - Push Data to Stack                             [ Press 1 ]\n";
-        cout<<"[ 2 ] - Pop from Stack                             [ Press 2 ]\n";
-        cout<<"[ 3 ] - Peek Data from Stack                             [ Press 3 ]\n";
-        cout<<"[ 4 ] - Goto Main Menu                                   [ Press 4 ]\n";
+        cout<<"\n --------------- You Selected Stack Menu ----------------------\n";
+        cout<<"\n[ 1 ] - Push Data to Stack                               [ Press 1 ]\n";
+        cout<<"\n[ 2 ] - Pop from Stack                            		  [ Press 2 ]\n";
+        cout<<"\n[ 3 ] - Peek Data from Stack                             [ Press 3 ]\n";
+        cout<<"\n[ 4 ] - Goto Main Menu                                   [ Press 4 ]\n";
         cin>>choices;
         switch(choices)
         {
@@ -97,6 +139,7 @@ void stack()
                         cout<<"\n Enter Number to be Pushed - ";
                         cin>>num;
                         status = obj.push(num);
+                        clearscreen();
                         if(status == true)
                         {   cout<<num<<" was Pushed Successfully.\n You can check it now using Peek Menu";
                             
@@ -109,13 +152,15 @@ void stack()
                         if(status == true){
                             cout<<"Deleted";
                         }else{
-                            cout<<"Error While Deleting";
+                            cout<<"Stack is Already Empty";
                         }
                         goto start;
             case 3 : if(obj.peek()){
                 
                          } goto start;
-            case 4 : break;
+            case 4 :     obj.deleteall();
+                         break;
+                         
             default : cout<<"Wrong Key Entered";
                             goto start;
             }
@@ -125,17 +170,18 @@ int main()
 {   int choices = 0;
 
     start : 
-
-    cout<<" ---------------- Welcome to Stack Implementation Window -------------------- \n";
-    cout<<" [ 1 ] - Stack                                                               [ Press 1 ]\n";
-    cout<<" [ 3 ] - Exit                                                                [ Press 3 ]\n";
+	
+    cout<<"\n ---------------- Welcome to Stack Implementation Window -------------------- \n";
+    cout<<"\n [ 1 ] - Stack --------------------------------------------------------------> [ Press 1 ]\n";
+    cout<<"\n [ 3 ] - Exit  --------------------------------------------------------------> [ Press 3 ]\n";
+    cout<<"\nPlease Enter Your Choice :- ";
     cin>>choices;
     switch(choices)
     {
-        case 1 : system("cls");
+        case 1 : 	clearscreen();
                         stack();
                     goto start;
-        // case 2 : system("cls");
+        // case 2 : clearscreen();
         //                 queue();
         //             goto start;
         case 3 : exit(1);
