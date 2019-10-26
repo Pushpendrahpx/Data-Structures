@@ -62,7 +62,7 @@ bool Stack::peek(){
             {   // Stack is Already Empty
                 return false;
             }else{
-                top = temp;
+                temp = top;
                 while(temp != NULL){
                     // Just for Printing Starting Block
                     if(top == temp){
