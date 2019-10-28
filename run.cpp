@@ -107,20 +107,114 @@ int Stack::gettotalnodes()
     }
 }
 void Stack::deleteall(){
-                            Node *temp = new Node;
-                            temp = top;
-                        while(temp != NULL){
-                        	 
-                            cout<<"\nDeleted  - "<<temp->data<<"\n";
-                            delete temp;
-                            
-                            
-							temp = temp->next;
-                            
+                        Node *temp = new Node;
+                        Node *temp1 = new Node;
+                        
+                        temp = top;
+                        temp1 = top;
+                        while(temp1 != NULL){
+                        	 if(temp1 != top){
+                                 Node *temp = new Node;
+                                 temp = temp1;
+                             }
+                             cout<<"\n"<<temp->data<<" - was Deleted\n";
+                             delete temp;
+                             
+                             
+                            temp1 = temp1->next;
 						}
                             
                            
                         
+}
+class Queue{
+    private : 
+        Node *head,*tail;
+    public :
+        Queue()
+        {
+            head = tail = NULL;
+        }
+        bool insert(int);
+        bool qdelete();
+        bool see();
+        bool qdeleteall();
+};
+bool Queue::insert(int data){
+    Node *temp = new Node;
+    temp->data = data;
+    if(head == NULL && tail == NULL){
+        temp->next = NULL;
+        head = temp;
+        tail = temp;
+
+        return true;
+    }else{
+    	temp->next = NULL;
+        tail->next = temp;
+        tail = temp;
+
+        return true;
+    }
+
+}
+bool Queue::qdelete() {
+    if(head == NULL && tail == NULL){
+        return false;
+    }else{
+    	if(tail->next == NULL){
+    		
+        Node *temp = new Node;
+        temp = head;
+        head = head->next;
+        tail = tail->next;
+        delete temp;
+
+        return true;
+		}else{
+			
+        Node *temp = new Node;
+        temp = head;
+        head = head->next;
+        delete temp;
+
+        return true;
+		}
+    }
+}
+bool Queue::see(){
+    if(head == NULL && tail == NULL){
+        cout<<"\nQueue Already Empty\n";
+        return true;
+    }else{
+        Node *temp = new Node;
+        temp = head;
+        while(temp != NULL){
+            if(temp == head){
+                cout<<"\nHEAD -> ";
+            }
+            cout<< temp->data <<" -> ";
+            if(temp == tail){
+                cout<<" NULL ( TAIL )";
+            }
+            temp = temp->next;
+        }
+        return true;
+    }
+}
+bool Queue::qdeleteall(){
+    if(head == NULL && tail == NULL){
+        cout<<"\nQueue Already Empty\n";
+        return false;
+    }else{
+        Node *temp = new Node;
+        temp = head;
+        while(temp != NULL){
+            cout<<"\nDATA DELETED - "<<temp->data;
+            delete temp;
+            temp = temp->next;
+        }
+    }
 }
 void stack()
 {
@@ -166,13 +260,58 @@ void stack()
             }
         
 }
+void queue()
+{
+    int choices; bool status;
+    Queue obj;
+    start : 
+        cout<<"\n --------------- You Selected Queue Menu ----------------------\n";
+        cout<<"\n[ 1 ] - Insert Data                                      [ Press 1 ]\n";
+        cout<<"\n[ 2 ] - Delete from Stack                            	  [ Press 2 ]\n";
+        cout<<"\n[ 3 ] - See Data from Stack                              [ Press 3 ]\n";
+        cout<<"\n[ 4 ] - Goto Main Menu                                   [ Press 4 ]\n";
+        cin>>choices;
+        switch(choices)
+        {
+            case 1 : int num;
+                        cout<<"\n Enter Number to be Pushed - ";
+                        cin>>num;
+                        status = obj.insert(num);
+                        clearscreen();
+                        if(status == true)
+                        {   cout<<num<<" was Pushed Successfully.\n You can check it now using Peek Menu";
+                            
+                            goto start;
+                        }else{
+                            cout<<"\nUnable to Push Data";
+                            goto start;
+                        }
+            case 2 : status = obj.qdelete();
+                        if(status == true){
+                            cout<<"Deleted";
+                        }else{
+                            cout<<"Stack is Already Empty";
+                        }
+                        goto start;
+            case 3 : if(obj.see()){
+                
+                         } goto start;
+            case 4 :     obj.qdeleteall();
+                         break;
+                         
+            default : cout<<"Wrong Key Entered";
+                            goto start;
+            }
+        
+}
 int main()
 {   int choices = 0;
 
     start : 
 	
-    cout<<"\n ---------------- Welcome to Stack Implementation Window -------------------- \n";
+    cout<<"\n ---------------- Welcome to Stack And Queue Implementation Window -------------------- \n";
     cout<<"\n [ 1 ] - Stack --------------------------------------------------------------> [ Press 1 ]\n";
+    cout<<"\n [ 2 ] - Queue --------------------------------------------------------------> [ Press 2 ]\n";
     cout<<"\n [ 3 ] - Exit  --------------------------------------------------------------> [ Press 3 ]\n";
     cout<<"\nPlease Enter Your Choice :- ";
     cin>>choices;
@@ -181,9 +320,9 @@ int main()
         case 1 : 	clearscreen();
                         stack();
                     goto start;
-        // case 2 : clearscreen();
-        //                 queue();
-        //             goto start;
+        case 2 : clearscreen();
+                        queue();
+                    goto start;
         case 3 : exit(1);
         default : 
             cout<<"\n Error 1x2 - Invalid Code Entered [ Go Back and Try Another Option ] :( \n";
