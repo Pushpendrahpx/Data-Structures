@@ -3,8 +3,6 @@ using namespace std;
 void clearscreen()
 {
     system("cls");
-    // Used ClearScreen because when Moving through Different Compiler of Turbo C++ it is really messy to edit each line getch() , clrscr() with system("cls")
-
 }
 struct Node {
     int data; // Each Node have Integer type Data in it
