@@ -1,3 +1,90 @@
+ -------------------------------------------- Actually There are 2 Codes Above For Binary Tree -------------------------------------
+	 
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+void clear(){
+    system("cls");
+}
+struct Node{
+    int data;
+    Node *left;
+    Node *right;
+};
+class BinaryTree{
+    private:
+	Node *root;
+	Node *HEAD;
+    public:
+	BinaryTree(){
+	clear();
+	this->root = NULL;
+	this->HEAD = NULL;
+	}
+	void insert(int);
+};
+void BinaryTree::insert(int num){
+    Node *temp = new Node;
+    temp->data = num;
+    temp->left = temp->right = NULL;
+
+    
+    if(root == NULL){
+        root = temp;
+        cout<<root->data<<" FIRST INSERTED\n";
+    }else{
+        Node *check = new Node;
+        check = root;
+    	if(root){
+    		cout<<root->data<<"(Center)[ROOT] => ";
+		}
+		
+        while(check){
+        	if(num <= check->data){
+            if(check->left != NULL){
+                check = check->left;
+                cout<<"(LEFT)[Jumping]"<<check->data<<" => ";continue;
+            }else{
+            	check->left = temp;
+                cout<<"(LEFT)[Assign]"<<temp->data<<" inserted left\n";
+                check = temp;
+                
+                goto END;
+                
+            }
+        }else{
+            if(check->right != NULL){
+                check = check->right;
+                cout<<"(RIGHT)[Jumping]"<<check->data<<" => ";
+                continue;
+            }else{
+            	check->right = temp;
+                cout<<"(RIGHT)[Assign]"<<temp->data<<" inserted right\n";
+                check = temp;
+                
+                goto END;
+            }
+        }
+        
+		}
+		
+		
+    }
+    END : 
+    cout<<"";
+    
+}
+int main()
+{   
+    BinaryTree obj;
+    int list[10] = {9,4,2,6,3,5,1,8,7,0};
+    for(int i=0;i<10;i++){
+    	obj.insert(list[i]);
+	}
+    return 0;
+}
+ -------------------------------------------- Actually There are 2 Codes Above For Binary Tree -------------------------------------
+
 #include <iostream>
 using namespace std;
 void clearscreen()
